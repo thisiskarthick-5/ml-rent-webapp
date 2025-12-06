@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>House Rent Prediction</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+        padding: 40px;
+    }
+    .container {
+        width: 350px;
+        background: #fff;
+        padding: 20px;
+        margin: auto;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        background: #007bff;
+        color: #fff;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+    button:hover {
+        background: #0056b3;
+    }
+    #result {
+        margin-top: 20px;
+        font-weight: bold;
+        color: green;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>House Rent Prediction</h2>
+
+    <label>BHK</label>
+    <input type="number" id="bhk" placeholder="Enter BHK">
+
+    <label>Furnishing (0 = Unfurnished, 1 = Semi, 2 = Full)</label>
+    <input type="number" id="furnishing" placeholder="Enter Furnishing">
+
+    <label>Size (sq ft)</label>
+    <input type="number" id="size" placeholder="Enter Size">
+
+    <button onclick="predictRent()">Predict Rent</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function predictRent() {
+    let bhk = document.getElementById("bhk").value;
+    let furnishing = document.getElementById("furnishing").value;
+    let size = document.getElementById("size").value;
+
+    fetch("https://backend01-7u8w.onrender.com/predict", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            BHK: Number(bhk),
+            Furnishing: Number(furnishing),
+            Size_sqft: Number(size)
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("result").innerHTML =
+            "Predicted Rent: ₹ " + data.predicted_rent;
+    })
+    .catch(error => {
+        document.getElementById("result").innerHTML = "Error connecting to API.";
+        console.error(error);
+    });
+}
+</script>
+
+</body>
+</html>
