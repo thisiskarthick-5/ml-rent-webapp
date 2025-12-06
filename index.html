@@ -2,90 +2,463 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>House Rent Prediction</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Nest - AI Rent Prediction</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
+    /* --- THEME VARIABLES --- */
+    :root {
+        --color-bg: #E3F6F4;      
+        --color-dark: #1C2126;    
+        --color-white: #FFFFFF;
+        --color-accent: #68c7c1;  
+        --color-accent-light: #d1f0ed;
+        --text-grey: #64748b;
+        --shadow-soft: 0 10px 40px rgba(0,0,0,0.05);
+        --shadow-card: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
     body {
-        font-family: Arial, sans-serif;
-        background: #f2f2f2;
-        padding: 40px;
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--color-bg);
+        color: var(--color-dark);
+        overflow-x: hidden;
     }
-    .container {
-        width: 350px;
-        background: #fff;
-        padding: 20px;
-        margin: auto;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    input, select, button {
+
+    /* --- HEADER / NAVBAR --- */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
-        padding: 10px;
-        margin-top: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+        padding: 20px 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(227, 246, 244, 0.8); /* Glass effect */
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        transition: 0.3s;
     }
-    button {
-        background: #007bff;
-        color: #fff;
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--color-dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo i { color: var(--color-accent); }
+
+    .nav-links {
+        display: flex;
+        gap: 30px;
+        list-style: none;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: var(--color-dark);
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--color-accent); }
+
+    /* --- HERO CONTAINER --- */
+    .main-wrapper {
+        display: flex;
+        justify-content: center;
+        padding: 120px 20px 60px 20px; /* Top padding for fixed header */
+        min-height: 100vh;
+    }
+
+    .dashboard-card {
+        display: flex;
+        background: var(--color-white);
+        width: 100%;
+        max-width: 1100px;
+        border-radius: 30px;
+        box-shadow: var(--shadow-soft);
+        overflow: hidden;
+        position: relative;
+    }
+
+    /* Left Side: Visuals */
+    .hero-visual {
+        flex: 1;
+        padding: 50px;
+        background: linear-gradient(135deg, #f0fdfc 0%, #fff 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+    }
+
+    .hero-visual h1 {
+        font-size: 3rem;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        color: var(--color-dark);
+    }
+
+    .hero-visual h1 span {
+        color: var(--color-accent);
+    }
+
+    .hero-img-container {
+        margin-top: 30px;
+        width: 100%;
+        height: 300px;
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .hero-img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+    }
+
+    .hero-img-container:hover img { transform: scale(1.05); }
+
+    /* Right Side: Form */
+    .form-container {
+        flex: 0.8;
+        padding: 50px;
+        background: var(--color-white);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .input-group { margin-bottom: 20px; }
+    
+    .input-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: block;
+        color: var(--color-dark);
+    }
+
+    .input-pill {
+        width: 100%;
+        padding: 16px 20px;
+        border-radius: 50px;
+        border: 2px solid #f1f5f9;
+        background: #f8fafc;
+        font-family: inherit;
+        font-size: 1rem;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    .input-pill:focus {
+        border-color: var(--color-dark);
+        background: #fff;
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 18px;
+        background: var(--color-dark);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 600;
         cursor: pointer;
-        margin-top: 15px;
+        transition: 0.3s;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
     }
-    button:hover {
-        background: #0056b3;
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
+
+    /* Result Box */
     #result {
-        margin-top: 20px;
-        font-weight: bold;
-        color: green;
+        margin-top: 25px;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        display: none;
+    }
+
+    /* --- SECTION: HOW IT WORKS --- */
+    .how-it-works {
+        padding: 80px 20px;
+        max-width: 1100px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+        color: var(--text-grey);
+        margin-bottom: 50px;
+    }
+
+    .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    .step-card {
+        background: white;
+        padding: 40px 20px;
+        border-radius: 20px;
+        box-shadow: var(--shadow-card);
+        transition: 0.3s;
+        position: relative;
+        z-index: 1;
+    }
+
+    .step-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .icon-box {
+        width: 70px;
+        height: 70px;
+        background: var(--color-accent-light);
+        color: var(--color-dark);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin: 0 auto 20px auto;
+    }
+
+    .step-card h3 { font-size: 1.2rem; margin-bottom: 10px; }
+    .step-card p { color: var(--text-grey); font-size: 0.9rem; line-height: 1.6; }
+
+    /* Number badge behind card */
+    .step-number {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 4rem;
+        font-weight: 700;
+        color: #f1f5f9;
+        z-index: -1;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+        text-align: center;
+        padding: 40px;
+        color: var(--text-grey);
+        font-size: 0.9rem;
+    }
+
+    /* --- RESPONSIVE MEDIA QUERIES --- */
+    @media (max-width: 900px) {
+        .navbar { padding: 15px 20px; }
+        .nav-links { display: none; } /* Hide nav links on mobile */
+        
+        .main-wrapper { padding-top: 100px; }
+        .dashboard-card { flex-direction: column; }
+        
+        .hero-visual { padding: 30px; text-align: center; }
+        .hero-visual h1 { font-size: 2.2rem; }
+        .hero-img-container { height: 200px; }
+        
+        .form-container { padding: 30px; }
+        
+        .steps-grid { grid-template-columns: 1fr; }
     }
 </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>House Rent Prediction</h2>
+<!-- Header -->
+<nav class="navbar">
+    <div class="logo">
+        <i class="fas fa-city"></i> ModernNest
+    </div>
+    <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#how-it-works">How it Works</a></li>
+        <!-- Contact Us removed -->
+    </ul>
+</nav>
 
-    <label>BHK</label>
-    <input type="number" id="bhk" placeholder="Enter BHK">
+<!-- Main Predictor Section -->
+<section class="main-wrapper">
+    <div class="dashboard-card">
+        <!-- Left: Visuals -->
+        <div class="hero-visual">
+            <h1>Predict Rent with <br><span>AI Precision</span></h1>
+            <p style="color: var(--text-grey); margin-bottom: 20px;">
+                Instant property valuation based on real-time market trends.
+            </p>
+            <div class="hero-img-container">
+                <!-- Online Image from Unsplash -->
+                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Modern Apartment Building">
+            </div>
+        </div>
 
-    <label>Furnishing (0 = Unfurnished, 1 = Semi, 2 = Full)</label>
-    <input type="number" id="furnishing" placeholder="Enter Furnishing">
+        <!-- Right: Form -->
+        <div class="form-container">
+            <h2 style="margin-bottom: 30px;">Get your estimate</h2>
 
-    <label>Size (sq ft)</label>
-    <input type="number" id="size" placeholder="Enter Size">
+            <div class="input-group">
+                <label class="input-label">Apartment Size (BHK)</label>
+                <input type="number" id="bhk" class="input-pill" placeholder="Ex: 2">
+            </div>
 
-    <button onclick="predictRent()">Predict Rent</button>
+            <div class="input-group">
+                <label class="input-label">Furnishing Status</label>
+                <select id="furnishing" class="input-pill" style="cursor: pointer;">
+                    <option value="" disabled selected>Select status</option>
+                    <option value="0">Unfurnished</option>
+                    <option value="1">Semi-Furnished</option>
+                    <option value="2">Fully Furnished</option>
+                </select>
+            </div>
 
-    <div id="result"></div>
-</div>
+            <div class="input-group">
+                <label class="input-label">Area (Square Feet)</label>
+                <input type="number" id="size" class="input-pill" placeholder="Ex: 1200">
+            </div>
+
+            <button class="btn-primary" onclick="predictRent()">
+                Calculate Rent <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <div id="result"></div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section id="how-it-works" class="how-it-works">
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-subtitle">Understanding the technology behind the prediction</p>
+
+    <div class="steps-grid">
+        <!-- Step 1 -->
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="icon-box">
+                <i class="fas fa-edit"></i>
+            </div>
+            <h3>Enter Details</h3>
+            <p>Input key property details like BHK configuration, carpet area size, and furnishing status.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="icon-box">
+                <i class="fas fa-server"></i>
+            </div>
+            <h3>ML Model Processing</h3>
+            <p>Your data is sent via API to our trained backend Machine Learning model which processes the features.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="icon-box">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Get Prediction</h3>
+            <p>The model returns the calculated rent value through the API, displaying it instantly on your screen.</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <!-- Updated License Year -->
+    <p>&copy; 2025 ModernNest Real Estate AI. All rights reserved.</p>
+</footer>
 
 <script>
-function predictRent() {
-    let bhk = document.getElementById("bhk").value;
-    let furnishing = document.getElementById("furnishing").value;
-    let size = document.getElementById("size").value;
+    function predictRent() {
+        const bhk = document.getElementById("bhk").value;
+        const furnishing = document.getElementById("furnishing").value;
+        const size = document.getElementById("size").value;
+        const resultDiv = document.getElementById("result");
+        const btn = document.querySelector(".btn-primary");
 
-    fetch("https://backend01-7u8w.onrender.com/predict", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            BHK: Number(bhk),
-            Furnishing: Number(furnishing),
-            Size_sqft: Number(size)
+        if(bhk === "" || furnishing === "" || size === "") {
+            resultDiv.style.display = "block";
+            resultDiv.style.background = "#fee2e2";
+            resultDiv.style.color = "#991b1b";
+            resultDiv.innerHTML = "Please fill in all fields.";
+            return;
+        }
+
+        // Loading State
+        btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Processing...";
+        btn.style.opacity = "0.7";
+        resultDiv.style.display = "none";
+
+        fetch("https://backend01-7u8w.onrender.com/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                BHK: Number(bhk),
+                Furnishing: Number(furnishing),
+                Size_sqft: Number(size)
+            })
         })
-    })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById("result").innerHTML =
-            "Predicted Rent: ₹ " + data.predicted_rent;
-    })
-    .catch(error => {
-        document.getElementById("result").innerHTML = "Error connecting to API.";
-        console.error(error);
-    });
-}
+        .then(response => response.json())
+        .then(data => {
+            btn.innerHTML = "Calculate Rent <i class='fas fa-arrow-right'></i>";
+            btn.style.opacity = "1";
+            
+            // Format currency (INR)
+            const formatter = new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                maximumFractionDigits: 0
+            });
+
+            resultDiv.style.display = "block";
+            resultDiv.style.background = "#d1f0ed";
+            resultDiv.style.color = "#134e4a"; // Dark teal
+            resultDiv.innerHTML = `
+                <span style="display:block; font-size:0.9rem; margin-bottom:5px;">Estimated Monthly Rent</span>
+                <span style="font-size: 2rem; font-weight: 700;">${formatter.format(data.predicted_rent)}</span>
+            `;
+        })
+        .catch(error => {
+            btn.innerHTML = "Calculate Rent <i class='fas fa-arrow-right'></i>";
+            btn.style.opacity = "1";
+            resultDiv.style.display = "block";
+            resultDiv.style.background = "#fee2e2";
+            resultDiv.style.color = "#991b1b";
+            resultDiv.innerHTML = "Error connecting to server.";
+        });
+    }
 </script>
 
 </body>
