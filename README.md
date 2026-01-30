@@ -55,41 +55,31 @@ The ModernNest AI Rent Prediction System helps users estimate fair rental values
 - Frontend: Static Hosting ( Vercel)
 
 ---
-# Backend
-
-### Request Body
-```json
-{
-  "BHK": 2,
-  "Furnishing": 1,
-  "Size_sqft": 1200
-}
-
-#Use Cases
-
--Helps tenants estimate fair rental prices
-
--Assists property owners in pricing decisions
-
--Demonstrates ML and web application integration
-
--Suitable for academic projects and portfolios
-
-#Future Enhancements
-
--Location-based rent prediction
-
--User authentication and profiles
-
--Prediction history and analytics
-
--Advanced ML model with more features
-
--Admin dashboard
-
-#License
-
--This project is licensed under the MIT License.
 
 
-### Endpoint
+
+### Use Cases
+
+- Helps tenants estimate fair rental prices
+
+- Assists property owners in pricing decisions
+
+- Demonstrates ML and web application integration
+
+- Suitable for academic projects and portfolios
+
+### Future Enhancements
+
+- Location-based rent prediction
+
+- User authentication and profiles
+
+- Prediction history and analytics
+
+- Advanced ML model with more features
+
+- Admin dashboard
+
+
+
+
